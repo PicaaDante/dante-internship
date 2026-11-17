@@ -1,0 +1,7 @@
+#section-items .container {
+  position: relative;
+}
+
+#section-items .nft__item {
+  margin: 0 10px;
+}

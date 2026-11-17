@@ -1,25 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Slider from "react-slick";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
+import Carousel from "../UI/Carousel";
 import "./HotCollections.css";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const sliderRef = useRef(null);
-
-  const next = () => {
-    sliderRef.current?.slickNext();
-  };
-
-  const previous = () => {
-    sliderRef.current?.slickPrev();
-  };
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -36,39 +23,6 @@ const HotCollections = () => {
     };
     fetchCollections();
   }, []);
-
-  // Carousel settings
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   if (loading) {
     return (
@@ -116,26 +70,7 @@ const HotCollections = () => {
           </div>
         </div>
 
-        {/* Previous / Next buttons */}
-
-        <div className="slider-constrols">
-          <button
-            className="slider-arrow slider-arrow--left"
-            onClick={previous}
-          >
-            &lsaquo;
-          </button>
-          <button className="slider-arrow slider-arrow--right" onClick={next}>
-            &rsaquo;
-          </button>
-        </div>
-
-        <slider
-          ref={(slider) => {
-            sliderRef.current = slider;
-          }}
-          {...settings}
-        >
+        <Carousel>
           {collections.map((collection) => (
             <div className="nft_coll" key={collection.id}>
               <img
@@ -152,7 +87,7 @@ const HotCollections = () => {
               <span>ERC-{collection.code}</span>
             </div>
           ))}
-        </slider>
+        </Carousel>
       </div>
     </section>
   );

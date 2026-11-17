@@ -1,24 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Slider from "react-slick";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
+import Carousel from "../UI/Carousel";
 import "./NewItems.css";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const sliderRef = React.useRef(null);
-
-  const next = () => {
-    sliderRef.current?.slickNext();
-  };
-  const previous = () => {
-    sliderRef.current?.slickPrev();
-  };
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -35,37 +23,6 @@ const NewItems = () => {
     };
     fetchItems();
   }, []);
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   if (loading) {
     return (
@@ -113,32 +70,24 @@ const NewItems = () => {
           </div>
         </div>
 
-        {/* PREVIOUS / NEXT BUTTONS */}
-
-        <div className="slider-controls">
-          <button className="slider-arrow slider-arrow-left" onClick={previous}>
-            &lsaquo;
-          </button>
-          <button className="slider-arrow slider-arrow-right" onClick={next}>
-            &rsaquo;
-          </button>
-        </div>
-
-        <slider
-          ref={(slider) => {
-            sliderRef.current = slider;
-          }}
-          {...settings}
-        >
-          {items.map((colleciton) => (
-            <div className="nft_items" key={colleciton.id}>
-              <img className="items-banner" src={colleciton.nftimage} alt="" />
-              <img className="items-avatar" src={items.authorImage} alt="" />
-              <h3>{items.title}</h3>
-              <span>ERC-{items.code}</span>
+        <Carousel>
+          {items.map((item) => (
+            <div className="nft_coll" key={item.id}>
+              <img
+                className="collection-banner"
+                src={item.nftImage}
+                alt=""
+              />
+              <img
+                className="collection-avatar"
+                src={item.authorImage}
+                alt=""
+              />
+              <h3>{item.title}</h3>
+              <span>ERC-{item.code}</span>
             </div>
           ))}
-        </slider>
+        </Carousel>
       </div>
     </section>
   );
