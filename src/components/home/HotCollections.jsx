@@ -130,7 +130,7 @@ const HotCollections = () => {
           </button>
         </div>
 
-        <Slider
+        <slider
           ref={(slider) => {
             sliderRef.current = slider;
           }}
@@ -152,7 +152,7 @@ const HotCollections = () => {
               <span>ERC-{collection.code}</span>
             </div>
           ))}
-        </Slider>
+        </slider>
       </div>
     </section>
   );
