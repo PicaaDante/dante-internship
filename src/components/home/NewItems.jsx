@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "../UI/Carousel";
 import "./NewItems.css";
+import { useParams } from "react-router-dom";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [timeLeft, setTimeLeft] = useState({});
+  const { id } = useParams();
 
   // Fetch items
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
         );
         setItems(response.data);
       } catch (err) {
@@ -102,24 +105,25 @@ const NewItems = () => {
         <Carousel>
           {items.map((item) => (
             <div className="nft__item" key={item.id}>
-              <div className="author_list_pp">
+              <Link to={`/author/${item.authorId}`} className="author_list_pp">
                 <img src={item.authorImage} alt="" />
-              </div>
+              </Link>
 
               {/* Countdown */}
               {item.expiryDate && (
-                <div className="de_countdown">
-                  {timeLeft[item.id] || "..."}
-                </div>
+                <div className="de_countdown">{timeLeft[item.id] || "..."}</div>
               )}
 
-              <div className="nft__item_wrap">
+              <Link
+                to={`/item-details/${item.nftId}`}
+                className="nft__item_wrap"
+              >
                 <img
                   src={item.nftImage}
                   className="lazy nft__item_preview"
                   alt=""
                 />
-              </div>
+              </Link>
 
               <div className="nft__item_info">
                 <h4>{item.title}</h4>
