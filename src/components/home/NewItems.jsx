@@ -7,22 +7,53 @@ const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [timeLeft, setTimeLeft] = useState({});
 
+  // Fetch items
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
         );
         setItems(response.data);
-        setLoading(false);
       } catch (err) {
         console.error("Failed to fetch items.", err);
+        setError("Failed to fetch items.");
+      } finally {
         setLoading(false);
       }
     };
     fetchItems();
   }, []);
+
+  // Countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const updated = {};
+
+      items.forEach((item) => {
+        if (item.expiryDate) {
+          const diff = item.expiryDate - now;
+
+          if (diff > 0) {
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            updated[item.id] = `${hours}h ${minutes}m ${seconds}s`;
+          } else {
+            updated[item.id] = "Expired";
+          }
+        }
+      });
+
+      setTimeLeft(updated);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [items]);
 
   if (loading) {
     return (
@@ -35,8 +66,6 @@ const NewItems = () => {
                 <div className="small-border bg-color-2"></div>
               </div>
             </div>
-
-            {/* SKELETON LOADER */}
 
             {[...Array(4)].map((_, index) => (
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
@@ -72,19 +101,34 @@ const NewItems = () => {
 
         <Carousel>
           {items.map((item) => (
-            <div className="nft_coll" key={item.id}>
-              <img
-                className="collection-banner"
-                src={item.nftImage}
-                alt=""
-              />
-              <img
-                className="collection-avatar"
-                src={item.authorImage}
-                alt=""
-              />
-              <h3>{item.title}</h3>
-              <span>ERC-{item.code}</span>
+            <div className="nft__item" key={item.id}>
+              <div className="author_list_pp">
+                <img src={item.authorImage} alt="" />
+              </div>
+
+              {/* Countdown */}
+              {item.expiryDate && (
+                <div className="de_countdown">
+                  {timeLeft[item.id] || "..."}
+                </div>
+              )}
+
+              <div className="nft__item_wrap">
+                <img
+                  src={item.nftImage}
+                  className="lazy nft__item_preview"
+                  alt=""
+                />
+              </div>
+
+              <div className="nft__item_info">
+                <h4>{item.title}</h4>
+                <div className="nft__item_price">{item.price} ETH</div>
+                <div className="nft__item_like">
+                  <i className="fa fa-heart"></i>
+                  <span>{item.likes}</span>
+                </div>
+              </div>
             </div>
           ))}
         </Carousel>
