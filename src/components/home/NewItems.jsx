@@ -20,6 +20,7 @@ const NewItems = () => {
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
         );
         setItems(response.data);
+        console.log("NewItems API", response.data);
       } catch (err) {
         console.error("Failed to fetch items.", err);
         setError("Failed to fetch items.");
