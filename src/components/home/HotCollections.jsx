@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Carousel from "../UI/Carousel";
+import { HotCollectionsSkeleton } from "../UI/Skeleton";
 import "./HotCollections.css";
 
 const HotCollections = () => {
@@ -36,16 +37,9 @@ const HotCollections = () => {
               </div>
             </div>
 
-            {/* Skeleton Loader */}
-
             {[...Array(4)].map((_, index) => (
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
-                <div className="nft_coll skeleton">
-                  <div className="collection-banner skeleton-banner"></div>
-                  <div className="collection-avatar skeleton-avatar"></div>
-                  <h3 className="skeleton-text"></h3>
-                  <span className="skeleton-text"></span>
-                </div>
+                <HotCollectionsSkeleton />
               </div>
             ))}
           </div>
