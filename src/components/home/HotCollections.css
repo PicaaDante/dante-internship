@@ -48,16 +48,13 @@
 
 /* CAROUSEL */
 
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
-
 .slider-controls {
   position: relative;
 }
 
 .slider-arrow {
   position: absolute;
-  top: 60%;
+  top: 50%;
   transform: translateY(-50%);
   z-index: 10;
   width: 40px;
@@ -82,11 +79,11 @@
 }
 
 .slider-arrow--left {
-  left: -35px;
+  left: -45px;
 }
 
 .slider-arrow--right {
-  right: -35px;
+  right: -45px;
 }
 
 .slick-slider {

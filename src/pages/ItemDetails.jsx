@@ -1,13 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 import EthImage from "../images/ethereum.svg";
-import { Link } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
-import nftImage from "../images/nftImage.jpg";
 
 const ItemDetails = () => {
+  const { id } = useParams();
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+
+    const fetchItem = async () => {
+      try {
+        const response = await axios.get(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
+        );
+
+        const foundItem = response.data.find((nft) => nft.nftId === Number(id));
+
+        setItem(foundItem || null);
+      } catch (err) {
+        console.error("Failed to fetch item details", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItem();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="container text-center mt-5">
+        <p>Loading item...</p>
+      </div>
+    );
+  }
+
+  if (!item) {
+    return (
+      <div className="container text-center mt-5">
+        <p>Item not found</p>
+      </div>
+    );
+  }
 
   return (
     <div id="wrapper">
@@ -18,14 +55,14 @@ const ItemDetails = () => {
             <div className="row">
               <div className="col-md-6 text-center">
                 <img
-                  src={nftImage}
+                  src={item.nftImage}
                   className="img-fluid img-rounded mb-sm-30 nft-image"
-                  alt=""
+                  alt={item.title}
                 />
               </div>
               <div className="col-md-6">
                 <div className="item_info">
-                  <h2>Rainbow Style #194</h2>
+                  <h2>{item.title}</h2>
 
                   <div className="item_info_counts">
                     <div className="item_info_views">
@@ -34,7 +71,7 @@ const ItemDetails = () => {
                     </div>
                     <div className="item_info_like">
                       <i className="fa fa-heart"></i>
-                      74
+                      {item.likes}
                     </div>
                   </div>
                   <p>
@@ -47,30 +84,41 @@ const ItemDetails = () => {
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
-                            <img className="lazy" src={AuthorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img
+                              className="lazy"
+                              src={item.authorImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                          <Link to={`/author/${item.authorId}`}>
+                            Monica Lucas
+                          </Link>
                         </div>
                       </div>
                     </div>
-                    <div></div>
                   </div>
                   <div className="de_tab tab_simple">
                     <div className="de_tab_content">
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
-                            <img className="lazy" src={AuthorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img
+                              className="lazy"
+                              src={item.authorImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                          <Link to={`/author/${item.authorId}`}>
+                            Monica Lucas
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -78,7 +126,7 @@ const ItemDetails = () => {
                     <h6>Price</h6>
                     <div className="nft-item-price">
                       <img src={EthImage} alt="" />
-                      <span>1.85</span>
+                      <span>{item.price}</span>
                     </div>
                   </div>
                 </div>
