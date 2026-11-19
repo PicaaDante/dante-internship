@@ -41,4 +41,18 @@ export const NewItemsSkeleton = () => {
   );
 };
 
+export const TopSellersSkeleton = () => {
+  return (
+    <li>
+      <div className="author_list_pp">
+        <SkeletonBox width="50px" height="50px" borderRadius="50%" />
+      </div>
+      <div className="author_list_info">
+        <SkeletonBox width="120px" height="16px" borderRadius="4px" />
+        <SkeletonBox width="60px" height="14px" borderRadius="4px" />
+      </div>
+    </li>
+  );
+};
+
 export default SkeletonBox;
