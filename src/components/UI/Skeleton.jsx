@@ -58,10 +58,36 @@ export const TopSellersSkeleton = () => {
 export const ExploreItemsSkeleton = () => {
   return (
     <div className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <SkeletonBox width="100%" height="180px" borderRadius="8px" />
-      <SkeletonBox width="50px" height="50px" borderRadius="50%" />
-      <SkeletonBox width="70%" height="20px" borderRadius="4px" />
-      <SkeletonBox width="40%" height="16px" borderRadius="4px" />
+      <div className="nft__item">
+        <SkeletonBox width="100%" height="180px" borderRadius="8px" />
+        <SkeletonBox width="50px" height="50px" borderRadius="50%" />
+        <SkeletonBox width="70%" height="20px" borderRadius="4px" />
+        <SkeletonBox width="40%" height="16px" borderRadius="4px" />
+      </div>
+    </div>
+  );
+};
+
+export const AuthorSkeleton = () => {
+  return (
+    <div className="container mt-5">
+      <div className="d-flex align-items-center mb-5">
+        <SkeletonBox width="100px" height="100px" borderRadius="50%" />
+        <div className="ms-4">
+          <SkeletonBox width="200px" height="28px" borderRadius="4px" />
+          <SkeletonBox width="120px" height="18px" borderRadius="4px" />
+          <SkeletonBox width="280px" height="16px" borderRadius="4px" />
+        </div>
+      </div>
+      <div className="row">
+        {new Array(8).fill(0).map((_, i) => (
+          <div className="col-lg-3 col-md-6 mb-4" key={i}>
+            <SkeletonBox width="100%" height="180px" borderRadius="8px" />
+            <SkeletonBox width="70%" height="20px" borderRadius="4px" />
+            <SkeletonBox width="40%" height="16px" borderRadius="4px" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

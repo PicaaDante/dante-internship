@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "../UI/Carousel";
 import { HotCollectionsSkeleton } from "../UI/Skeleton";
@@ -67,17 +68,23 @@ const HotCollections = () => {
         <Carousel>
           {collections.map((collection) => (
             <div className="nft_coll" key={collection.id}>
-              <img
-                className="collection-banner"
-                src={collection.nftImage}
-                alt=""
-              />
-              <img
-                className="collection-avatar"
-                src={collection.authorImage}
-                alt=""
-              />
-              <h3>{collection.title}</h3>
+              <Link to={`/author/${collection.authorId}`}>
+                <img
+                  className="collection-banner"
+                  src={collection.nftImage}
+                  alt=""
+                />
+              </Link>
+              <Link to={`/author/${collection.authorId}`}>
+                <img
+                  className="collection-avatar"
+                  src={collection.authorImage}
+                  alt=""
+                />
+              </Link>
+              <Link to={`/author/${collection.authorId}`}>
+                <h3>{collection.title}</h3>
+              </Link>
               <span>ERC-{collection.code}</span>
             </div>
           ))}
