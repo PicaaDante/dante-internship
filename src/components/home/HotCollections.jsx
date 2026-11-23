@@ -67,7 +67,7 @@ const HotCollections = () => {
 
         <Carousel>
           {collections.map((collection) => (
-            <div className="nft_coll" key={collection.id}>
+            <div className="nft_coll" key={collection.id} data-aos="fade-up">
               <Link to={`/author/${collection.authorId}`}>
                 <img
                   className="collection-banner"

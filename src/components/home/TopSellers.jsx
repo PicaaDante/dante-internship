@@ -67,7 +67,7 @@ const TopSellers = () => {
           <div className="col-md-12">
             <ol className="author_list">
               {sellers.map((seller) => (
-                <li key={seller.id}>
+                <li key={seller.id} data-aos="fade-up">
                   <div className="author_list_pp">
                     <Link to={`/author/${seller.authorId}`}>
                       <img

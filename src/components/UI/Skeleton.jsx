@@ -92,4 +92,24 @@ export const AuthorSkeleton = () => {
   );
 };
 
+export const ItemDetailsSkeleton = () => {
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6">
+          <SkeletonBox width="100%" height="400px" borderRadius="8px" />
+        </div>
+        <div className="col-md-6">
+          <SkeletonBox width="60%" height="32px" borderRadius="4px" />
+          <SkeletonBox width="40%" height="20px" borderRadius="4px" />
+          <SkeletonBox width="100%" height="80px" borderRadius="4px" />
+          <SkeletonBox width="50%" height="24px" borderRadius="4px" />
+          <SkeletonBox width="50%" height="24px" borderRadius="4px" />
+          <SkeletonBox width="30%" height="28px" borderRadius="4px" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default SkeletonBox;
