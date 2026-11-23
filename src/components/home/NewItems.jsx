@@ -96,7 +96,11 @@ const NewItems = () => {
 
         <Carousel>
           {items.map((item) => (
-            <div className="nft__item" key={item.id}>
+            <div 
+              className="nft__item" 
+              key={item.id}
+              data-aos="fade-up"
+            >
               <Link to={`/author/${item.authorId}`} className="author_list_pp">
                 <img src={item.authorImage} alt="" />
               </Link>
