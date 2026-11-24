@@ -10,3 +10,30 @@
 @import "./css/styles/style.css";
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
+
+@media (max-width: 768px) {
+  .slider-arrow--left {
+    left: -10px;
+  }
+
+  .slider-arrow--right {
+    right: -10px;
+  }
+
+  .de_countdown {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nft__item,
+  .nft_coll {
+    margin: 0 4px;
+  }
+
+  .d-item {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+}

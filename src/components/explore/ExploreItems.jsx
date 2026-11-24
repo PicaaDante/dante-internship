@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ExploreItemsSkeleton } from "../UI/Skeleton";
+import "./ExploreItems.css";
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
